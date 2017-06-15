@@ -1,15 +1,14 @@
 ############################################
 # Clustal Omega Alignment Parser           #
-# VCU Bioinformatics                       #
-# Version 1.0.0                            #
+# Version 1.0.1                            #
 ############################################
 ### Imports ###
 from __future__ import division, print_function
 import re
+import sys
 import subprocess as sp
 
 
-### Objects & Methods ###
 class ClustalReport(object):
     """
     This creates a Clustal Report object which takes in a clustal alignment file
@@ -89,7 +88,7 @@ class ClustalPipeline(object):
         self.validate()
         # callling subprocess to run clustal
         # Usage: list of arguments
-        sp.Popen(['/home/norrissw/bin/clustalo', '-i', self.infile, '--threads=%i' % self.threads, '-o', self.outfile,
+        sp.Popen(['/home/kuhnsa2/bin/clustalo', '-i', self.infile, '--threads=%i' % self.threads, '-o', self.outfile,
                   '--outfmt=clustal', '-v', '--force', '--wrap=999999']).wait()
 
 
@@ -99,10 +98,9 @@ if __name__ == '__main__':
         infile = sys.argv[1]
         outfile = sys.argv[2]
     except:
-        print("No infile and outfile given, invoking demo mode... using bat_flu.fasta & testout.aln")
+        print("No infile and outfile given, invoking exit mode...")
         print("Next time specify a file to be aligned & and output filename")
-        infile = 'bat_flu.fasta'
-        outfile = 'testout.aln'
+        sys.exit()
     print("Intializing and running Clustal Omega Pipeline")
     clustalpipe = ClustalPipeline(infile, outfile, 10)
     clustalpipe.run()
